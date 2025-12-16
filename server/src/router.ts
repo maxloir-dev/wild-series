@@ -15,12 +15,12 @@ router.post("/api/items", itemActions.add);
 
 /* ************************************************************************* */
 
-import type { RequestHandler } from "express";
+import sayActions from "./modules/say/sayActions";
 
-const sayWelcome: RequestHandler = (req, res) => {
-  res.send("Welcome to Wild Series !");
-};
+router.get("/", sayActions.sayWelcome);
 
-router.get("/", sayWelcome);
+import programsActions from "./modules/programs/programsActions";
+
+router.get("/api/programs", programsActions.browse);
 
 export default router;
