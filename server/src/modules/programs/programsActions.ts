@@ -25,8 +25,28 @@ const programs = [
 import type { RequestHandler } from "express";
 
 const browse: RequestHandler = (req, res) => {
+  if (req.query.q != null) {
+    const filteredPrograms = programs.filter((program) =>
+      program.synopsis.includes(req.query.q as string)
+  );
+
+  res.json(filteredPrograms);
+  } else {
   res.json(programs);
+  }
+};
+
+const read: RequestHandler = (req, res) => {
+  const parsedId = Number.parseInt(req.params.id);
+
+  const program = programs.find((p) => p.id === parsedId);
+
+  if (program != null) {
+    res.json(program);
+  } else {
+    res.sendStatus(404);
+  }
 };
 
 
-export default { browse };
+export default { browse, read };
